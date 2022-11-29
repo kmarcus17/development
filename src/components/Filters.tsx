@@ -2,17 +2,14 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   favoritesListPriceState,
-  filterCatState,
-  filterDogState,
-  filterFemaleState,
   filterGenderState,
   filterGoodWithState,
   filterLargeState,
-  filterMaleState,
   filterMediumState,
   filterPetTypeState,
   filterSmallState,
@@ -58,12 +55,6 @@ export const Filters = (): JSX.Element => {
 
   const [checkedSortPrice, setCheckedSortPrice] = useState(false);
 
-  // const [text, setText] = useRecoilState(refreshState);
-  const [filterDog, setFilterDog] = useRecoilState(filterDogState);
-  const [filterCat, setFilterCat] = useRecoilState(filterCatState);
-  const filterFemale = useSetRecoilState(filterFemaleState);
-  const filterMale = useSetRecoilState(filterMaleState);
-
   const setGoodWith = useSetRecoilState(filterGoodWithState);
   const setFilterPetType = useSetRecoilState(filterPetTypeState);
   const setFilterGender = useSetRecoilState(filterGenderState);
@@ -81,10 +72,8 @@ export const Filters = (): JSX.Element => {
   // const favoritesList = useRecoilValue(favortiesListState)
   const favoritesListPrice = useRecoilValue(favoritesListPriceState);
 
-  const [priceFavorites, setPriceFavorites] = useState(0);
   const [goodWithDiv, setGoodWithDiv] = useState(false);
   const [sizeDiv, setSizeDiv] = useState(false);
-  const [breedDiv, setBreedDiv] = useState(false);
   const [typesDiv, setTypesDiv] = useState(false);
   const [genderDiv, setGenderDiv] = useState(false);
 
@@ -115,35 +104,6 @@ export const Filters = (): JSX.Element => {
     setCheckedFilterSpayed(!checkedFilterSpayed);
   };
 
-  const handleChangeFilterDog = () => {
-    setShowFavorites(false);
-    if (!checkedFilterDog) {
-      setFilterPetType("Dog");
-      setFilterCat(false);
-      setFilterDog(true);
-      setCheckedFilterCat(false);
-    } else {
-      setFilterDog(false);
-      setFilterPetType("");
-    }
-    setCheckedFilterDog(!checkedFilterDog);
-  };
-
-  const handleChangeFilterCat = () => {
-    setShowFavorites(false);
-    if (!checkedFilterCat) {
-      setFilterPetType("Cat");
-
-      setFilterDog(false);
-      setFilterCat(true);
-      setCheckedFilterDog(false);
-    } else {
-      setFilterCat(false);
-      setFilterPetType("");
-    }
-    setCheckedFilterCat(!checkedFilterCat);
-  };
-
   const handleChangeFilterPetType = (type: string) => {
     setShowFavorites(false);
     if (type == "Dog") {
@@ -164,37 +124,6 @@ export const Filters = (): JSX.Element => {
       }
       setCheckedFilterCat(!checkedFilterCat);
     }
-  };
-
-  const handleChangeFilterFemale = () => {
-    setShowFavorites(false);
-    // setCheckedFilterMale(false)
-    // filterMale(false)
-    if (!checkedFilterFemale) {
-      setCheckedFilterMale(false);
-      // filterFemale(true)
-      setFilterGender("Female");
-    } else {
-      // filterFemale(false)
-      setFilterGender("");
-    }
-    setCheckedFilterFemale(!checkedFilterFemale);
-  };
-
-  const handleChangeFilterMale = () => {
-    setShowFavorites(false);
-    // setCheckedFilterFemale(false)
-    // filterFemale(false)
-    if (!checkedFilterMale) {
-      setCheckedFilterFemale(false);
-      // filterMale(true)
-      setFilterGender("Male");
-    } else {
-      setFilterGender("");
-
-      // filterMale(false)
-    }
-    setCheckedFilterMale(!checkedFilterMale);
   };
 
   const handleChangeFilterGender = (gender: string) => {
@@ -327,30 +256,6 @@ export const Filters = (): JSX.Element => {
     setCheckedSortDescending(!checkedSortDescending);
   };
 
-  const handleChangeSortAge = () => {
-    setShowFavorites(false);
-    setCheckedSortPrice(false);
-    if (!checkedSortAge) {
-      setSortPrice(false);
-      setSortAge(true);
-    } else {
-      setSortAge(false);
-    }
-    setCheckedSortAge(!checkedSortAge);
-  };
-
-  const handleChangeSortPrice = () => {
-    setShowFavorites(false);
-    setCheckedSortAge(false);
-    setSortAge(false);
-    if (!checkedSortPrice) {
-      setSortPrice(true);
-    } else {
-      setSortPrice(false);
-    }
-    setCheckedSortPrice(!checkedSortPrice);
-  };
-
   const handleChangeSortType = (sortType: string) => {
     setShowFavorites(false);
     switch (sortType) {
@@ -443,8 +348,6 @@ export const Filters = (): JSX.Element => {
   const handleClearFiltersClick = () => {
     setShowFavorites(false);
     setFilterVaccinated(false);
-    setFilterCat(false);
-    setFilterDog(false);
     setCheckedFilterVaccinated(false);
     setCheckedFilterDog(false);
     setCheckedFilterCat(false);
@@ -766,38 +669,3 @@ export const Filters = (): JSX.Element => {
     </div>
   );
 };
-
-// <FormControlLabel control={<Checkbox   checked={breedDiv}
-// onChange={() => setBreedDiv(!breedDiv)} />} disabled={!checkedFilterDog && !checkedFilterCat} label="Breed:" />
-// {breedDiv && (<div className='breeds'>
-//   {checkedFilterDog && (<div className='dogBreeds'><FormControlLabel control={<Checkbox   checked={checkedFilterDog}
-// onChange={handleChangeFilterDog} />} label="Pitbull" />
-//     <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Black Lab" />
-//     <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Cattle Dog" />
-//     <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Husky" />
-//  <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Border Collie" />
-//  <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Corgy" />
-//  <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Boxer" />
-//    <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Black Mouth Cur" />
-//       <FormControlLabel control={<Checkbox   checked={checkedFilterDog}
-// onChange={handleChangeFilterDog} />} label="Golden Retriever" /></div>)}
-//  {checkedFilterCat && (<div className='catBreeds'><FormControlLabel control={<Checkbox   checked={checkedFilterDog}
-// onChange={handleChangeFilterDog} />} label="American Shorthair" />
-//     <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Bombay" />
-//     <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Russian Blue" />
-//     <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Maine Coon" />
-//  <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Tabby" />
-//  <FormControlLabel control={<Checkbox  checked={checkedFilterCat}
-// onChange={handleChangeFilterCat}  />} label="Rag Doll" /></div>)}
-// </div>)}

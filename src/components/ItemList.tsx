@@ -454,53 +454,6 @@ export const ItemList = (): JSX.Element => {
     }
   }, [sortType]);
 
-  const sorting2 = (
-    price?: boolean,
-    age?: boolean,
-    descending?: boolean,
-    filteredList?: JSX.Element[]
-  ) => {
-    let listToSort = [...initalItemsList];
-    if (
-      filterGenders !== "" ||
-      filterPetType !== "" ||
-      filterGoodWith !== "" ||
-      filterVaccinated ||
-      filterSpayed ||
-      filterSmall ||
-      filterMedium ||
-      filterLarge
-    ) {
-      console.log("also filtering");
-      // listToSort = [...listOfFilteredItems];
-      listToSort = [...copyOfFilteredList];
-    }
-    console.log(listToSort);
-    let sortedList: JSX.Element[] = [];
-    if (price) {
-      console.log("filter price");
-      if (descending || sortDescending) {
-        sortedList = listToSort.sort(
-          (a, b) => b.props.adoptionFee - a.props.adoptionFee
-        );
-      } else {
-        sortedList = listToSort.sort(
-          (a, b) => a.props.adoptionFee - b.props.adoptionFee
-        );
-      }
-    } else if (age) {
-      console.log("filter age");
-      if (descending || sortDescending) {
-        sortedList = listToSort.sort((a, b) => b.props.age - a.props.age);
-      } else {
-        sortedList = listToSort.sort((a, b) => a.props.age - b.props.age);
-      }
-    }
-    console.log({ sortedList });
-    setListOfItemCards([...sortedList]);
-    console.log({ listOfItemCard });
-  };
-
   const sorting = (
     price?: boolean,
     age?: boolean,
