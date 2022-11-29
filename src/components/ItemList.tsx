@@ -20,7 +20,13 @@ import {
 import "../styles/ItemList.css";
 import { ItemCard } from "./ItemCard";
 
+/**
+ * Handles displaying a list of item cards. Handles filtering and sorting and
+ * changing what to display
+ * @returns a list of items to display on the screen
+ */
 export const ItemList = (): JSX.Element => {
+  // urls for the images
   const url =
     "data:image/jpeg;base64,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";
   const url2 =
@@ -54,6 +60,7 @@ export const ItemList = (): JSX.Element => {
   const url16 =
     "http://www.aspca.org/sites/default/files/adoptable-dogs-your-local-shelter.jpg";
 
+  // unique identifiers for the favorites list
   const guid = "a42b4961-1344-4b6e-b167-e2494017637f";
   const guid2 = "9905a094-fcde-45f7-91ba-06200e7baca6";
   const guid3 = "38e7ca13-d2d1-4ff3-9da9-f9708a794776";
@@ -71,6 +78,7 @@ export const ItemList = (): JSX.Element => {
   const guid15 = "c6723631-e640-42af-9b1f-c388d9011e22";
   const guid16 = "b3bbe7ce-41df-4012-b5ce-494c145912a3";
 
+  // list of items and their respective information, passed in via props
   const initalItemsList = [
     <ItemCard
       imgUrl={url}
@@ -346,11 +354,10 @@ export const ItemList = (): JSX.Element => {
     ></ItemCard>,
   ];
 
-  const [listOfItemCard, setListOfItemCards] = useState(initalItemsList);
+  // state variables
+  const [listOfItemCards, setListOfItemCards] = useState(initalItemsList);
   const [listOfFilteredItems, setListOfFilteredItems] =
     useState<JSX.Element[]>(initalItemsList);
-  const [newFilteredList, setNewFilteredList] = useState<JSX.Element[]>([]);
-  const [copyOfFilteredList, setCopyOfFilteredList] = useState(initalItemsList);
 
   const filterVaccinated = useRecoilValue(filterVaccinatedState);
   const filterSpayed = useRecoilValue(filterSpayedState);
@@ -373,28 +380,31 @@ export const ItemList = (): JSX.Element => {
   const [noItemsMessage, setNoItemsMessage] = useState("");
   const [noFilterResultsMessage, setNoFilterResultsMessage] = useState("");
 
-  // clear filters button
+  // handles clear filters button
   useEffect(() => {
     setListOfItemCards([...initalItemsList]);
     setListOfFilteredItems([...initalItemsList]);
   }, [resetList]);
 
+  // on first render, set to inital items list
   useEffect(() => {
     setListOfItemCards([...initalItemsList]);
     setNoFilterResultsMessage("");
     setNoItemsMessage("");
   }, []);
 
+  // if no results are found, display message for filtering
   useEffect(() => {
-    if (listOfItemCard.length === 0 && !showFavorites) {
+    if (listOfItemCards.length === 0 && !showFavorites) {
       setNoFilterResultsMessage(
         "No Results with that Filter combination, try adjusting your filter parameters!"
       );
     } else {
       setNoFilterResultsMessage("");
     }
-  }, [listOfItemCard]);
+  }, [listOfItemCards]);
 
+  // shows favorites when selected
   useEffect(() => {
     if (showFavorites) {
       setNoFilterResultsMessage("");
@@ -414,6 +424,7 @@ export const ItemList = (): JSX.Element => {
     }
   }, [showFavorites]);
 
+  // if an item is removed from the list while viewing favorites, display
   useEffect(() => {
     if (showFavorites) {
       const newList = initalItemsList.filter((item) =>
@@ -428,6 +439,7 @@ export const ItemList = (): JSX.Element => {
     }
   }, [favoriteList]);
 
+  // calculates the sum price of the favorites list
   useEffect(() => {
     const favoritesList = initalItemsList.filter((item) =>
       favoriteList.includes(item.props.petId)
@@ -439,6 +451,7 @@ export const ItemList = (): JSX.Element => {
     setFavoritesPrice(sum);
   }, [favoriteList]);
 
+  // handles sorting
   useEffect(() => {
     if (sortType !== "") {
       const priceBoolean = sortType === "price";
@@ -450,6 +463,40 @@ export const ItemList = (): JSX.Element => {
     }
   }, [sortType]);
 
+  // handles when descending sort is selected
+  useEffect(() => {
+    if (sortType !== "") {
+      const priceBoolean = sortType === "price";
+      const ageBoolean = sortType === "age";
+      if (sortDescending) {
+        sorting(priceBoolean, ageBoolean, true);
+      } else {
+        sorting(priceBoolean, ageBoolean, false);
+      }
+    }
+  }, [sortDescending]);
+
+  // handles filtering when one of the categories is selected
+  useEffect(() => {
+    handleFiltering();
+  }, [
+    filterGenders,
+    filterPetType,
+    filterVaccinated,
+    filterSpayed,
+    filterGoodWith,
+    filterSmall,
+    filterMedium,
+    filterLarge,
+  ]);
+
+  /**
+   * Handles sorting the item list
+   * @param price : true if sorting by price
+   * @param age : true if sorting by age
+   * @param descending: true if sorting in a descending order
+   * @param filteredList : optional list to pass in
+   */
   const sorting = (
     price?: boolean,
     age?: boolean,
@@ -457,6 +504,7 @@ export const ItemList = (): JSX.Element => {
     filteredList?: JSX.Element[]
   ) => {
     let listToSort = [...initalItemsList];
+    // check if the items are also being filtered
     if (filteredList) {
       listToSort = [...filteredList];
     } else if (
@@ -472,6 +520,7 @@ export const ItemList = (): JSX.Element => {
       listToSort = [...listOfFilteredItems];
     }
     let sortedList: JSX.Element[] = [];
+    // sort by price or age
     if (price) {
       if (descending || sortDescending) {
         sortedList = listToSort.sort(
@@ -492,21 +541,13 @@ export const ItemList = (): JSX.Element => {
     setListOfItemCards([...sortedList]);
   };
 
-  useEffect(() => {
-    handleFiltering();
-  }, [
-    filterGenders,
-    filterPetType,
-    filterVaccinated,
-    filterSpayed,
-    filterGoodWith,
-    filterSmall,
-    filterMedium,
-    filterLarge,
-  ]);
-
+  /**
+   * Handles filtering. Combines all the filters, and if there is a sort type selected
+   * sorts the end filtering results
+   */
   const handleFiltering = () => {
     let newList: JSX.Element[] = [...initalItemsList];
+
     if (filterGenders !== "") {
       newList = [...newList].filter(
         (item) => item.props.gender === filterGenders
@@ -537,8 +578,9 @@ export const ItemList = (): JSX.Element => {
       );
     }
 
+    // checks all combinations of size
     if (filterSmall && filterMedium && filterLarge) {
-      // not filtering here if everything selected
+      // not filtering here if all sizes are selected
     } else if (filterSmall && filterMedium) {
       newList = [...newList].filter(
         (item) => item.props.size === "Small" || item.props.size === "Medium"
@@ -560,6 +602,8 @@ export const ItemList = (): JSX.Element => {
     }
 
     setListOfFilteredItems([...newList]);
+
+    // if a sorting type is selected, sort
     if (sortType !== "") {
       const priceBoolean = sortType === "price";
       const ageBoolean = sortType === "age";
@@ -569,21 +613,9 @@ export const ItemList = (): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    if (sortType !== "") {
-      const priceBoolean = sortType === "price";
-      const ageBoolean = sortType === "age";
-      if (sortDescending) {
-        sorting(priceBoolean, ageBoolean, true);
-      } else {
-        sorting(priceBoolean, ageBoolean, false);
-      }
-    }
-  }, [sortDescending]);
-
   return (
     <div className="itemList">
-      {listOfItemCard}
+      {listOfItemCards}
       {noItemsMessage.length !== 0 && (
         <div className="emptyList">
           <p>

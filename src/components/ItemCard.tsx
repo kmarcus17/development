@@ -5,6 +5,9 @@ import { useRecoilState } from "recoil";
 import { favortiesListState } from "../atoms";
 import "../styles/ItemCard.css";
 
+/**
+ * Props for an item card
+ */
 export interface IItemCardProps {
   imgUrl: string;
   petId: string;
@@ -23,6 +26,11 @@ export interface IItemCardProps {
   gender: string;
 }
 
+/**
+ * Formats the item card, handles adding to the favorites list
+ * @param props
+ * @returns
+ */
 export const ItemCard = (props: IItemCardProps): JSX.Element => {
   const {
     imgUrl,
@@ -62,6 +70,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
     }
   };
 
+  // formatting for characteristics list
   let numCharacteristics = characteristics.length;
   let characteristicsList: string = trained;
 
@@ -70,7 +79,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
     characteristicsList = newChar + ", " + characteristicsList;
   }
 
-  //breed
+  // formatting for breed list
   let numBreeds = breed.length;
   let breedList: string = "";
 
@@ -83,11 +92,11 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
     }
   }
 
+  // sets button styling depending on whether or not item is in favorites list
   let isInFavorties = favoriteList.includes(petId);
   const buttonText = isInFavorties
     ? "Remove From Favorites"
     : "Add to Favorites";
-
   const backgroundColor = isInFavorties ? "#6b6be1" : "lavender";
   const buttonColor = isInFavorties ? "white" : "black";
 
@@ -95,7 +104,9 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
     <div className="animalCard">
       <div className="adoptionFee">
         <p>
-          <b>{gender} </b>
+          <b>
+            {gender} {petType}
+          </b>
         </p>
         <p>
           <b>{`$${adoptionFee}`}</b>

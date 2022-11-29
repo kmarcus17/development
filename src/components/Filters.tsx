@@ -2,8 +2,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-// import React, { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   favoritesListPriceState,
@@ -17,16 +16,14 @@ import {
   filterVaccinatedState,
   resetListState,
   showFavoritesState,
-  sortAgeState,
   sortDescendingState,
-  sortPriceState,
   sortTypeState,
 } from "../atoms";
 import "../styles/Filters.css";
 
 export const Filters = (): JSX.Element => {
+  // recoil state variables
   const [resetList, setResetList] = useRecoilState(resetListState);
-
   const [checkedFilterDog, setCheckedFilterDog] = useState(false);
   const [checkedFilterCat, setCheckedFilterCat] = useState(false);
   const [checkedFilterFemale, setCheckedFilterFemale] = useState(false);
@@ -64,8 +61,6 @@ export const Filters = (): JSX.Element => {
   const setFilterVaccinated = useSetRecoilState(filterVaccinatedState);
   const setFilterSpayed = useSetRecoilState(filterSpayedState);
 
-  const setSortAge = useSetRecoilState(sortAgeState);
-  const setSortPrice = useSetRecoilState(sortPriceState);
   const setDescendingSort = useSetRecoilState(sortDescendingState);
 
   const [showFavorites, setShowFavorites] = useRecoilState(showFavoritesState);
@@ -78,11 +73,82 @@ export const Filters = (): JSX.Element => {
 
   const [healthDiv, setHealthDiv] = useState(false);
 
-  // on first render, clear filters
-  useEffect(() => {
-    handleClearFiltersClick();
-  }, []);
+  // useEffects handle what happens when the categories for filtering are selected
 
+  // handles when the gender category checkbox is selected/deselected
+  useEffect(() => {
+    if (!genderDiv) {
+      setCheckedFilterFemale(false);
+      setCheckedFilterMale(false);
+      setFilterGender("");
+    } else {
+      setShowFavorites(false);
+    }
+  }, [genderDiv]);
+
+  // handles when the type category checkbox is selected/deselected
+  useEffect(() => {
+    if (!typesDiv) {
+      setCheckedFilterDog(false);
+      setCheckedFilterCat(false);
+      setFilterPetType("");
+    } else {
+      setShowFavorites(false);
+    }
+  }, [typesDiv]);
+
+  // handles when the size category checkbox is selected/deselected
+  useEffect(() => {
+    if (!sizeDiv) {
+      if (checkedFilterSmall) {
+        setFilterSmall(false);
+      }
+      if (checkedFilterMedium) {
+        setFilterMedium(false);
+      }
+      if (checkedFilterLarge) {
+        setFilterLarge(false);
+      }
+      setCheckedFilterSmall(false);
+      setCheckedFilterMedium(false);
+      setCheckedFilterLarge(false);
+    } else {
+      setShowFavorites(false);
+    }
+  }, [sizeDiv]);
+
+  // handles when the health category checkbox is selected/deselected
+  useEffect(() => {
+    if (!healthDiv) {
+      if (checkedFilterSpayed) {
+        setCheckedFilterSpayed(false);
+        setFilterSpayed(false);
+      }
+      if (checkedFilterVaccinated) {
+        setCheckedFilterVaccinated(false);
+        setFilterVaccinated(false);
+      }
+    } else {
+      setShowFavorites(false);
+    }
+  }, [healthDiv]);
+
+  // handles when the 'good in a home with' category checkbox is selected/deselected
+  useEffect(() => {
+    if (!goodWithDiv) {
+      setCheckedFilterKids(false);
+      setCheckedFilterOtherCats(false);
+      setCheckedFilterOtherDogs(false);
+      setCheckedFilterNoPets(false);
+      setGoodWith("");
+    } else {
+      setShowFavorites(false);
+    }
+  }, [goodWithDiv]);
+
+  /**
+   * handles what happens when the vaccinated checkbox is selected/deselected
+   */
   const handleChangeFilterVaccinated = () => {
     setShowFavorites(false);
     if (!checkedFilterVaccinated) {
@@ -93,6 +159,9 @@ export const Filters = (): JSX.Element => {
     setCheckedFilterVaccinated(!checkedFilterVaccinated);
   };
 
+  /**
+   * handles what happens when the spayed checkbox is selected/deselected
+   */
   const handleChangeFilterSpayed = () => {
     setShowFavorites(false);
     if (!checkedFilterSpayed) {
@@ -103,6 +172,9 @@ export const Filters = (): JSX.Element => {
     setCheckedFilterSpayed(!checkedFilterSpayed);
   };
 
+  /**
+   * handles what happens when the type of animal checkbox is selected/deselected
+   */
   const handleChangeFilterPetType = (type: string) => {
     setShowFavorites(false);
     if (type == "Dog") {
@@ -125,6 +197,9 @@ export const Filters = (): JSX.Element => {
     }
   };
 
+  /**
+   * handles what happens when the gender options checkboxes are selected/deselected
+   */
   const handleChangeFilterGender = (gender: string) => {
     setShowFavorites(false);
     if (gender == "Male") {
@@ -146,6 +221,9 @@ export const Filters = (): JSX.Element => {
     }
   };
 
+  /**
+   * handles what happens when the size options checkboxes are selected/deselected
+   */
   const handleChangeFilterSize = (size: string) => {
     setShowFavorites(false);
     switch (size) {
@@ -177,72 +255,9 @@ export const Filters = (): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    if (!genderDiv) {
-      setCheckedFilterFemale(false);
-      setCheckedFilterMale(false);
-      setFilterGender("");
-    } else {
-      setShowFavorites(false);
-    }
-  }, [genderDiv]);
-
-  useEffect(() => {
-    if (!typesDiv) {
-      setCheckedFilterDog(false);
-      setCheckedFilterCat(false);
-      setFilterPetType("");
-    } else {
-      setShowFavorites(false);
-    }
-  }, [typesDiv]);
-
-  useEffect(() => {
-    if (!sizeDiv) {
-      if (checkedFilterSmall) {
-        setFilterSmall(false);
-      }
-      if (checkedFilterMedium) {
-        setFilterMedium(false);
-      }
-      if (checkedFilterLarge) {
-        setFilterLarge(false);
-      }
-      setCheckedFilterSmall(false);
-      setCheckedFilterMedium(false);
-      setCheckedFilterLarge(false);
-    } else {
-      setShowFavorites(false);
-    }
-  }, [sizeDiv]);
-
-  useEffect(() => {
-    if (!healthDiv) {
-      if (checkedFilterSpayed) {
-        setCheckedFilterSpayed(false);
-        setFilterSpayed(false);
-      }
-      if (checkedFilterVaccinated) {
-        setCheckedFilterVaccinated(false);
-        setFilterVaccinated(false);
-      }
-    } else {
-      setShowFavorites(false);
-    }
-  }, [healthDiv]);
-
-  useEffect(() => {
-    if (!goodWithDiv) {
-      setCheckedFilterKids(false);
-      setCheckedFilterOtherCats(false);
-      setCheckedFilterOtherDogs(false);
-      setCheckedFilterNoPets(false);
-      setGoodWith("");
-    } else {
-      setShowFavorites(false);
-    }
-  }, [goodWithDiv]);
-
+  /**
+   * handles what happens when the descending sort checkbox is selected/deselected
+   */
   const handleChangeSortDescending = () => {
     setShowFavorites(false);
     if (!checkedSortDescending) {
@@ -253,6 +268,9 @@ export const Filters = (): JSX.Element => {
     setCheckedSortDescending(!checkedSortDescending);
   };
 
+  /**
+   * handles what happens when the sort options checkboxes are selected/deselected
+   */
   const handleChangeSortType = (sortType: string) => {
     setShowFavorites(false);
     switch (sortType) {
@@ -283,6 +301,9 @@ export const Filters = (): JSX.Element => {
     }
   };
 
+  /**
+   * handles what happens when the handle good with options checkboxes are selected/deselected
+   */
   const handleGoodWith = (goodWith: string) => {
     switch (goodWith) {
       case "Kids":
@@ -334,6 +355,9 @@ export const Filters = (): JSX.Element => {
     }
   };
 
+  /**
+   * Resets the sorting when the clear sort button is selected
+   */
   const handleClearSortingClick = () => {
     setCheckedSortDescending(false);
     setCheckedSortPrice(false);
@@ -342,17 +366,23 @@ export const Filters = (): JSX.Element => {
     setDescendingSort(false);
   };
 
+  /**
+   * Resets the filter when the clear filter button is selected
+   */
   const handleClearFiltersClick = () => {
     setShowFavorites(false);
-    setFilterVaccinated(false);
-    setCheckedFilterVaccinated(false);
-    setCheckedFilterDog(false);
-    setCheckedFilterCat(false);
+
+    // unchecks the filter topics checkboxes
     setGenderDiv(false);
     setTypesDiv(false);
     setSizeDiv(false);
     setHealthDiv(false);
     setGoodWithDiv(false);
+
+    // set checkboxes to unchecked
+    setCheckedFilterVaccinated(false);
+    setCheckedFilterDog(false);
+    setCheckedFilterCat(false);
     setCheckedFilterNoPets(false);
     setCheckedFilterOtherCats(false);
     setCheckedFilterOtherDogs(false);
@@ -363,15 +393,18 @@ export const Filters = (): JSX.Element => {
     setCheckedFilterSmall(false);
     setCheckedFilterLarge(false);
 
+    // sets the filters to false so that nothing is filtered
     setFilterGender("");
     setFilterPetType("");
+    setGoodWith("");
     setFilterVaccinated(false);
     setFilterSpayed(false);
     setFilterLarge(false);
     setFilterMedium(false);
     setFilterSmall(false);
-    setGoodWith("");
+    setFilterVaccinated(false);
 
+    // signals that the item list should be set to the original version
     setResetList(!resetList);
   };
 
@@ -386,7 +419,6 @@ export const Filters = (): JSX.Element => {
           <p>
             <b>Sort By: </b>
           </p>
-
           <Button
             onClick={handleClearSortingClick}
             color="secondary"
@@ -415,7 +447,6 @@ export const Filters = (): JSX.Element => {
           }
           label="Age"
         />
-
         <FormControlLabel
           control={
             <Checkbox
@@ -441,7 +472,6 @@ export const Filters = (): JSX.Element => {
           <p>
             <b>Filter By: </b>
           </p>
-
           <Button
             onClick={handleClearFiltersClick}
             color="secondary"
@@ -500,7 +530,7 @@ export const Filters = (): JSX.Element => {
                 onChange={() => setTypesDiv(!typesDiv)}
               />
             }
-            label="Type:"
+            label="Type of Animal:"
           />
           {typesDiv && (
             <div>
@@ -524,7 +554,6 @@ export const Filters = (): JSX.Element => {
               />
             </div>
           )}
-
           <FormControlLabel
             control={
               <Checkbox
