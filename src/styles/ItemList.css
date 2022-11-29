@@ -1,0 +1,25 @@
+.itemList {
+  display: grid;
+  padding-left: 4vw;
+  padding-top: 5vh;
+  width: 80vw;
+  grid-template-columns: repeat(auto-fit, 250px);
+  row-gap: 20px;
+  column-gap: 1vw;
+  margin-bottom: 3vh;
+}
+
+.emptyList {
+  background-color: #babaf1;
+  font-size: 30px;
+  width: 50vw;
+  padding-left: 4vw;
+  padding-right: 4vw;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  margin-top: 20vh;
+  margin-left: 4vw;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+}

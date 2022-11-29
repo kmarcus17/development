@@ -1,0 +1,19 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.filtersCategory {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.resetFiltersAndSort {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

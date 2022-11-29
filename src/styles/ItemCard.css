@@ -1,0 +1,48 @@
+.animalCard {
+  background-color: #babaf1;
+  height: 430px;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.nameAndAge {
+  display: flex;
+  flex-direction: row;
+  width: 190px;
+  justify-content: space-between;
+  font-size: 15px;
+}
+.adoptionFee {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 200px;
+}
+.animalDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 5px;
+}
+.informationPairs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 0px;
+  padding-bottom: 3px;
+  font-size: xx-small;
+}
+
+img {
+  width: 125px;
+  height: 125px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+button {
+  background-color: darken(lavender, 20);
+}
