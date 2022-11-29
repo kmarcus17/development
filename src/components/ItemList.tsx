@@ -411,8 +411,6 @@ export const ItemList = (): JSX.Element => {
     if (!showFavorites) {
       setNoItemsMessage("");
       setListOfItemCards([...listOfFilteredItems]);
-      console.log({ listOfFilteredItems });
-      // handleFiltering();
     }
   }, [showFavorites]);
 
@@ -443,13 +441,11 @@ export const ItemList = (): JSX.Element => {
 
   useEffect(() => {
     if (sortType !== "") {
-      console.log("SORTING");
       const priceBoolean = sortType === "price";
       const ageBoolean = sortType === "age";
       sorting(priceBoolean, ageBoolean);
     } else {
       setListOfItemCards([...listOfFilteredItems]);
-      console.log({ listOfFilteredItems });
       return;
     }
   }, [sortType]);
@@ -462,8 +458,6 @@ export const ItemList = (): JSX.Element => {
   ) => {
     let listToSort = [...initalItemsList];
     if (filteredList) {
-      console.log("also filtering from list");
-      // listToSort = [...listOfFilteredItems];
       listToSort = [...filteredList];
     } else if (
       filterGenders !== "" ||
@@ -475,14 +469,10 @@ export const ItemList = (): JSX.Element => {
       filterMedium ||
       filterLarge
     ) {
-      console.log("also filtering");
-      // listToSort = [...listOfFilteredItems];
       listToSort = [...listOfFilteredItems];
     }
-    console.log(listToSort);
     let sortedList: JSX.Element[] = [];
     if (price) {
-      console.log("filter price");
       if (descending || sortDescending) {
         sortedList = listToSort.sort(
           (a, b) => b.props.adoptionFee - a.props.adoptionFee
@@ -493,20 +483,17 @@ export const ItemList = (): JSX.Element => {
         );
       }
     } else if (age) {
-      console.log("filter age");
       if (descending || sortDescending) {
         sortedList = listToSort.sort((a, b) => b.props.age - a.props.age);
       } else {
         sortedList = listToSort.sort((a, b) => a.props.age - b.props.age);
       }
     }
-    console.log({ sortedList });
     setListOfItemCards([...sortedList]);
-    console.log({ listOfItemCard });
   };
 
   useEffect(() => {
-    handleFiltering2();
+    handleFiltering();
   }, [
     filterGenders,
     filterPetType,
@@ -518,157 +505,39 @@ export const ItemList = (): JSX.Element => {
     filterLarge,
   ]);
 
-  // useEffect(() => {
-  //   setNewFilteredList([...newFilteredList]);
-  // }, newFilteredList);
-
   const handleFiltering = () => {
-    console.log("handle filtering");
-    // let newList: JSX.Element[] = initalItemsList;
-    setNewFilteredList([...initalItemsList]);
-    console.log({ newFilteredList });
-    if (filterGenders !== "") {
-      console.log("filter gender");
-      const filteredGenderedList = newFilteredList.filter(
-        (item) => item.props.gender === filterGenders
-      );
-      console.log({ filteredGenderedList });
-      setNewFilteredList([...filteredGenderedList]);
-    }
-
-    if (filterPetType !== "") {
-      // console.log("filterPetType: " + filterPetType);
-      // const filteredPetList = newFilteredList.filter(
-      //   (item) => item.props.petType === filterPetType
-      // );
-      // console.log({ filteredPetList });
-      // setNewFilteredList(() => [...filteredPetList]);
-      console.log("filterPetType: " + filterPetType);
-      const filteredPetList = newFilteredList.filter(
-        (item) => item.props.petType === filterPetType
-      );
-      console.log({ filteredPetList });
-      setNewFilteredList((newFilteredList) => [...filteredPetList]);
-    }
-    console.log({ newFilteredList });
-
-    if (filterVaccinated) {
-      console.log("filter vaccinated");
-      const filteredVaccinatedList = newFilteredList.filter(
-        (item) => item.props.healthVaccines === true
-      );
-      setNewFilteredList([...filteredVaccinatedList]);
-    }
-
-    if (filterSpayed) {
-      console.log("filter spayed");
-      const filteredSpayedList = newFilteredList.filter(
-        (item) => item.props.healthSpayedNeutered === true
-      );
-      setNewFilteredList([...filteredSpayedList]);
-    }
-
-    if (filterGoodWith !== "") {
-      console.log("filter good with");
-      const filteredGoodWithList = newFilteredList.filter(
-        (item) => item.props.goodInAHomeWith === filterGoodWith
-      );
-      setNewFilteredList([...filteredGoodWithList]);
-    }
-
-    if (filterSmall && filterMedium && filterLarge) {
-      console.log("filter size");
-      // not filtering here if everything selected
-    } else if (filterSmall && filterMedium) {
-      const filteredSmallMedium = newFilteredList.filter(
-        (item) => item.props.size === "Small" || item.props.size === "Medium"
-      );
-      setNewFilteredList([...filteredSmallMedium]);
-    } else if (filterSmall && filterLarge) {
-      const filteredSmallLarge = newFilteredList.filter(
-        (item) => item.props.size === "Small" || item.props.size === "Large"
-      );
-      setNewFilteredList([...filteredSmallLarge]);
-    } else if (filterLarge && filterMedium) {
-      const filteredMediumLarge = newFilteredList.filter(
-        (item) => item.props.size === "Large" || item.props.size === "Medium"
-      );
-      setNewFilteredList([...filteredMediumLarge]);
-    } else if (filterSmall) {
-      const filteredSmall = newFilteredList.filter(
-        (item) => item.props.size === "Small"
-      );
-      setNewFilteredList([...filteredSmall]);
-    } else if (filterMedium) {
-      const filteredMedium = newFilteredList.filter(
-        (item) => item.props.size === "Medium"
-      );
-      setNewFilteredList([...filteredMedium]);
-    } else if (filterLarge) {
-      const filteredLarge = newFilteredList.filter(
-        (item) => item.props.size === "Large"
-      );
-      setNewFilteredList([...filteredLarge]);
-    }
-    console.log("new list of filtered items");
-    console.log({ newFilteredList });
-    setListOfFilteredItems([...newFilteredList]);
-    console.log({ listOfFilteredItems });
-    if (sortType !== "") {
-      console.log("SORTING FROM FILTER");
-      const priceBoolean = sortType === "price";
-      const ageBoolean = sortType === "age";
-      sorting(priceBoolean, ageBoolean);
-    } else {
-      // setListOfItemCards([]);
-      setListOfItemCards([...newFilteredList]);
-    }
-  };
-
-  const handleFiltering2 = () => {
-    console.log("handle filtering");
     let newList: JSX.Element[] = [...initalItemsList];
-    // setCopyOfFilteredList([...initalItemsList]);
-    console.log({ newList });
     if (filterGenders !== "") {
-      console.log("filter gender");
       newList = [...newList].filter(
         (item) => item.props.gender === filterGenders
       );
-      console.log({ newList });
     }
 
     if (filterPetType !== "") {
-      console.log("filterPetType: " + filterPetType);
       newList = [...newList].filter(
         (item) => item.props.petType === filterPetType
       );
-      console.log({ newList });
     }
 
     if (filterVaccinated) {
-      console.log("filter vaccinated");
       newList = [...newList].filter(
         (item) => item.props.healthVaccines === true
       );
     }
 
     if (filterSpayed) {
-      console.log("filter spayed");
       newList = [...newList].filter(
         (item) => item.props.healthSpayedNeutered === true
       );
     }
 
     if (filterGoodWith !== "") {
-      console.log("filter good with");
       newList = [...newList].filter(
         (item) => item.props.goodInAHomeWith === filterGoodWith
       );
     }
 
     if (filterSmall && filterMedium && filterLarge) {
-      console.log("filter size");
       // not filtering here if everything selected
     } else if (filterSmall && filterMedium) {
       newList = [...newList].filter(
@@ -690,17 +559,12 @@ export const ItemList = (): JSX.Element => {
       newList = [...newList].filter((item) => item.props.size === "Large");
     }
 
-    console.log("new list of filtered items");
-    console.log({ newList });
     setListOfFilteredItems([...newList]);
-    // console.log({ listOfFilteredItems });
     if (sortType !== "") {
-      console.log("SORTING FROM FILTER");
       const priceBoolean = sortType === "price";
       const ageBoolean = sortType === "age";
       sorting(priceBoolean, ageBoolean, sortDescending, newList);
     } else {
-      // setListOfItemCards([]);
       setListOfItemCards([...newList]);
     }
   };

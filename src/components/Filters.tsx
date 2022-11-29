@@ -69,7 +69,6 @@ export const Filters = (): JSX.Element => {
   const setDescendingSort = useSetRecoilState(sortDescendingState);
 
   const [showFavorites, setShowFavorites] = useRecoilState(showFavoritesState);
-  // const favoritesList = useRecoilValue(favortiesListState)
   const favoritesListPrice = useRecoilValue(favoritesListPriceState);
 
   const [goodWithDiv, setGoodWithDiv] = useState(false);
@@ -216,8 +215,6 @@ export const Filters = (): JSX.Element => {
       setShowFavorites(false);
     }
   }, [sizeDiv]);
-
-  //      setFilterVaccinated(false);
 
   useEffect(() => {
     if (!healthDiv) {
