@@ -62,7 +62,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
   const handleClick = () => {
     const favsList = [...favoriteList];
     if (isInFavorties) {
-      const newList = favsList.filter((item) => item != petId);
+      const newList = favsList.filter((item) => item !== petId);
       setFavoritesList(newList);
     } else {
       favsList.push(petId);
@@ -85,7 +85,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
 
   for (let i = 0; i < numBreeds; i++) {
     let newString = breed[i];
-    if (i == 0) {
+    if (i === 0) {
       breedList = newString;
     } else {
       breedList = newString + " / " + breedList;
@@ -113,7 +113,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
         </p>
       </div>
       <div className="animalPicture">
-        <img src={imgUrl} alt="Picture of Pet" />
+        <img src={imgUrl} />
       </div>
       <div className="nameAndAge">
         <p>
@@ -121,7 +121,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
         </p>
         <p>
           <i>
-            {age} {age != 1 ? "years" : "year"}
+            {age} {age !== 1 ? "years" : "year"}
           </i>
         </p>
       </div>

@@ -177,7 +177,7 @@ export const Filters = (): JSX.Element => {
    */
   const handleChangeFilterPetType = (type: string) => {
     setShowFavorites(false);
-    if (type == "Dog") {
+    if (type === "Dog") {
       if (!checkedFilterDog) {
         setCheckedFilterCat(false);
         setFilterPetType("Dog");
@@ -186,7 +186,7 @@ export const Filters = (): JSX.Element => {
       }
       setCheckedFilterDog(!checkedFilterDog);
     }
-    if (type == "Cat") {
+    if (type === "Cat") {
       if (!checkedFilterCat) {
         setCheckedFilterDog(false);
         setFilterPetType("Cat");
@@ -202,7 +202,7 @@ export const Filters = (): JSX.Element => {
    */
   const handleChangeFilterGender = (gender: string) => {
     setShowFavorites(false);
-    if (gender == "Male") {
+    if (gender === "Male") {
       if (!checkedFilterMale) {
         setCheckedFilterFemale(false);
         setFilterGender("Male");
@@ -210,7 +210,7 @@ export const Filters = (): JSX.Element => {
         setFilterGender("");
       }
       setCheckedFilterMale(!checkedFilterMale);
-    } else if (gender == "Female") {
+    } else if (gender === "Female") {
       if (!checkedFilterFemale) {
         setCheckedFilterMale(false);
         setFilterGender("Female");
