@@ -413,7 +413,7 @@ export const ItemList = (): JSX.Element => {
       );
       setListOfItemCards([...newList]);
       setNoItemsMessage(
-        newList.length == 0
+        newList.length === 0
           ? "Favorites List is empty, add a pet to your list to see it here!"
           : ""
       );
@@ -432,7 +432,7 @@ export const ItemList = (): JSX.Element => {
       );
       setListOfItemCards([...newList]);
       setNoItemsMessage(
-        newList.length == 0
+        newList.length === 0
           ? "Favorites List is empty, add a pet to your list to see it here!"
           : ""
       );
