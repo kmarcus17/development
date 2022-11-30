@@ -113,7 +113,7 @@ export const ItemCard = (props: IItemCardProps): JSX.Element => {
         </p>
       </div>
       <div className="animalPicture">
-        <img src={imgUrl} />
+        <img src={imgUrl} alt={"Picture of Pet"} />
       </div>
       <div className="nameAndAge">
         <p>
